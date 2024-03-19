@@ -44,7 +44,7 @@ btn2.addEventListener('click', () => {
             // names must be equal
             return 0;
         });
-        console.log(contacts);
+        // console.log(contacts);
         isDesc = false;
         btn2.innerHTML = "Ordine alfabetico ⬇️"
     } else {
@@ -61,7 +61,7 @@ btn2.addEventListener('click', () => {
             // names must be equal
             return 0;
         });
-        console.log(contacts);
+        // console.log(contacts);
         isDesc = true;
         btn2.innerHTML = "Ordine alfabetico ⬆️"
     }
