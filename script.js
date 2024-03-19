@@ -1,16 +1,32 @@
+let index=1;
+let contacts = [];
+let requestURL = 'https://api.parser.name/?api_key=4ec4c916da1c0847958ccf93a30d2d8a&endpoint=generate&country_code=IT&results=10';
+let request = new XMLHttpRequest();
+request.open('GET', requestURL);
+request.responseType = 'json';
+request.send();
+request.onload = function () {
+    let nomi = request.response;
+    // console.log(nomi);
+    contacts = [];
+    nomi.data.forEach(nome =>{ contacts.push({'id':index,'name':`${nome.name.firstname.name}`,'surname':`${nome.name.lastname.name}`})
+    index++;
+
+    })
+    // console.log(contacts);
+    
+}
+
 let counterColor = 0;
 let btn1 = document.querySelector('#btn1');
 let h1 = document.querySelector('h1');
 let colors = ['red', 'black', 'green', 'blue', 'yellow'];
-let btn2 = document.querySelector('#btn2');
+let btn2nomi = document.querySelector('#btn2-nomi');
+let btn2cognomi = document.querySelector('#btn2-cognomi');
 let btn3 = document.querySelector('#btn3');
 let hide = document.querySelector('#hide');
 let wrapper = document.querySelector('.wrapper');
-let contacts = [
-    { 'id': 1, 'name': 'Nicola' },
-    { 'id': 2, 'name': 'Fabio' },
-    { 'id': 3, 'name': 'Luca' },
-    { 'id': 4, 'name': 'Giulia' }]
+
 let isDesc = true;
 let isDescID = true;
 
@@ -27,7 +43,7 @@ btn1.addEventListener('click', () => {
 
 })
 
-btn2.addEventListener('click', () => {
+btn2nomi.addEventListener('click', () => {
 
     wrapper.innerHTML="";
     if (isDesc) {
@@ -46,7 +62,7 @@ btn2.addEventListener('click', () => {
         });
         // console.log(contacts);
         isDesc = false;
-        btn2.innerHTML = "Ordine alfabetico ⬇️"
+        btn2nomi.innerHTML = "Ordine nomi ⬇️"
     } else {
         contacts.sort((a, b) => {
             const nameA = a.name.toUpperCase(); // ignore upper and lowercase
@@ -63,11 +79,58 @@ btn2.addEventListener('click', () => {
         });
         // console.log(contacts);
         isDesc = true;
-        btn2.innerHTML = "Ordine alfabetico ⬆️"
+        btn2nomi.innerHTML = "Ordine nomi ⬆️"
     }
     let article = document.createElement("article");
     contacts.forEach(contact => {
-        article.innerHTML += `<p>${contact.name}</p>`;
+        article.innerHTML += `<p>${contact.name} ${contact.surname}</p>`;
+    });
+    wrapper.appendChild(article);
+    // console.log(article);
+
+})
+
+btn2cognomi.addEventListener('click', () => {
+
+    wrapper.innerHTML="";
+    if (isDesc) {
+        contacts.sort((a, b) => {
+            const nameA = a.surname.toUpperCase(); // ignore upper and lowercase
+            const nameB = b.surname.toUpperCase(); // ignore upper and lowercase
+            if (nameA < nameB) {
+                return -1;
+            }
+            if (nameA > nameB) {
+                return 1;
+            }
+
+            // names must be equal
+            return 0;
+        });
+        // console.log(contacts);
+        isDesc = false;
+        btn2cognomi.innerHTML = "Ordine cognomi ⬇️"
+    } else {
+        contacts.sort((a, b) => {
+            const nameA = a.surname.toUpperCase(); // ignore upper and lowercase
+            const nameB = b.surname.toUpperCase(); // ignore upper and lowercase
+            if (nameA < nameB) {
+                return 1;
+            }
+            if (nameA > nameB) {
+                return -1;
+            }
+
+            // names must be equal
+            return 0;
+        });
+        // console.log(contacts);
+        isDesc = true;
+        btn2cognomi.innerHTML = "Ordine cognomi ⬆️"
+    }
+    let article = document.createElement("article");
+    contacts.forEach(contact => {
+        article.innerHTML += `<p>${contact.surname} ${contact.name} </p>`;
     });
     wrapper.appendChild(article);
     // console.log(article);
@@ -90,7 +153,7 @@ btn3.addEventListener('click', () => {
     }
     let article = document.createElement("article");
     contacts.forEach(contact => {
-        article.innerHTML += `<p>${contact.id}: ${contact.name}</p>`;
+        article.innerHTML += `<p>${contact.id}: ${contact.name} ${contact.surname}</p>`;
     });
     wrapper.appendChild(article);
     // console.log(article);
